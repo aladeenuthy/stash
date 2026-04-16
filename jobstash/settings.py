@@ -132,5 +132,8 @@ SIMPLE_JWT = {
 }
 DJOSER = {
     'TOKEN_MODEL': None,
-
+     'SERIALIZERS': {
+        'user_create': 'stash.serializer.UserCreateSerializer',
+        'current_user': 'stash.serializer.UserSerializer',
+    }
 }
