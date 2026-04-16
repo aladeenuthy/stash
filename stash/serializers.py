@@ -12,17 +12,32 @@ class UserSerializer(BaseUserSerializer):
 class CategorySerializer(serializers.ModelSerializer):
     class Meta:
         model = Category
-        fields = ['id', 'name', 'created_at', 'updated_at']
+        fields = ['id', 'name',]
 
 class CreateAndUpdateCategorySerializer(serializers.ModelSerializer):
+
     class Meta:
         model = Category
         fields = ['name']
-
 
 class StashSerializer(serializers.ModelSerializer):
     category = CategorySerializer()
     class Meta:
         model = Stash
-        fields = ['id', 'title', 'description', 'url', 'category', 'created_at', 'updated_at']
-        read_only_fields = ['created_at', 'updated_at']
+        fields = ['id', 'title', 'description', 'url', 'category',]
+
+class CreateAndUpdateStashSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Stash
+        fields = ['title', 'description', 'url', 'category']
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        request = self.context.get('request')
+        if request:
+            self.fields['category'].queryset = Category.objects.filter(user=request.user)
+
+    def validate_category(self, value):
+        user = self.context['request'].user
+        if value and value.user != user:
+            raise serializers.ValidationError("You can only use your own categories.")
+        return value
