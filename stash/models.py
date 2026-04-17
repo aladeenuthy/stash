@@ -22,11 +22,21 @@ class Category(TimeStampMixin, models.Model):
         return self.name
     
 class Stash(TimeStampMixin, models.Model):
+
+    APPLICATION_CHOICES = [
+        ('A', 'Applied'),
+        ('S', 'Saved'),
+        ('I',  'Interview'),
+        ('O', 'Offer'),
+        ('R', 'Rejected'),
+
+    ]
     title = models.CharField(max_length=255)
     description = models.TextField(null=True, blank=True)
     url = models.URLField()
     category = models.ForeignKey(Category, on_delete=models.CASCADE, null=True, blank=True)
     user = models.ForeignKey(User, on_delete=models.CASCADE)
+    status = models.CharField(max_length=1, choices=APPLICATION_CHOICES, default='S')
 
     def __str__(self):
         return self.title

@@ -24,7 +24,7 @@ class StashSerializer(serializers.ModelSerializer):
     category = CategorySerializer()
     class Meta:
         model = Stash
-        fields = ['id', 'title', 'description', 'url', 'category',]
+        fields = ['id', 'title', 'description', 'url','status', 'category']
 
 class CreateAndUpdateStashSerializer(serializers.ModelSerializer):
     class Meta:
