@@ -29,7 +29,7 @@ class StashSerializer(serializers.ModelSerializer):
 class CreateAndUpdateStashSerializer(serializers.ModelSerializer):
     class Meta:
         model = Stash
-        fields = ['title', 'description', 'url', 'category']
+        fields = ['title', 'description', 'url', 'category', 'status']
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
         request = self.context.get('request')

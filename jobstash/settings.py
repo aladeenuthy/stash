@@ -44,6 +44,7 @@ INSTALLED_APPS = [
     'stash',
     'rest_framework',
     'djoser',
+    'django_filters',
 
 ]
 
